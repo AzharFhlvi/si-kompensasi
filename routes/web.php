@@ -80,5 +80,12 @@ Route::get('/form/layouts-horizontal', $controller_path . '\form_layouts\Horizon
 Route::get('/tables/basic', $controller_path . '\tables\Basic@index')->name('tables-basic');
 
 Auth::routes();
+Route::redirect('/', '/dashboard', 301);
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::group(['prefix' => 'dashboard'], function () {
+    Route::get('/', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/admin', [App\Http\Controllers\DashboardController::class, 'dashAdm'])->name('dashboard-admin')->middleware('checkrole:1');;
+    Route::get('/mahasiswa', [App\Http\Controllers\DashboardController::class, 'dashMhs'])->name('dashboard-mahasiswa')->middleware('checkrole:2');;
+    Route::get('/pengawas', [App\Http\Controllers\DashboardController::class, 'dashPws'])->name('dashboard-pengawas');
+});
+
