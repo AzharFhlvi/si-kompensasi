@@ -25,6 +25,11 @@ class HomeController extends Controller
     public function index()
     {
         // dd('home');
-        return view('home');
+        $chartData = [
+            ['year' => '2019', 'sales' => 100],
+            ['year' => '2020', 'sales' => 200],
+            ['year' => '2021', 'sales' => 150],
+        ];
+        return view('home', compact('chartData'));
     }
 }

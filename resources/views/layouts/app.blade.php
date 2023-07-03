@@ -24,7 +24,7 @@ $container = ($container ?? 'container-xxl');
   <div class="layout-container">
 
     @if ($isMenu)
-    @include('layouts/sections/menu/verticalMenu')
+    @include('layouts/navbar/menu')
     @endif
 
 
