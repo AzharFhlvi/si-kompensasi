@@ -14,7 +14,7 @@ class KompensasiController extends Controller
      */
     public function index()
     {
-        //
+        return view('kompensasi.index');
     }
 
     /**

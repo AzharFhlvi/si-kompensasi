@@ -1,10 +1,19 @@
 {
   "menu": [
     {
+      "menuHeader": "Menu"
+    },
+    {
       "url": "/",
       "name": "Dashboard",
       "icon": "menu-icon tf-icons bx bx-home-circle",
       "slug": "dashboard-analytics"
+    },
+    {
+      "url":"/kompensasi",
+      "name":"Kompensasi",
+      "icon":"menu-icon tf-icons bx bxs-report",
+      "slug":"kompensasi"
     }
     
   ]

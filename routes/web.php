@@ -89,3 +89,11 @@ Route::group(['prefix' => 'dashboard'], function () {
     Route::get('/pengawas', [App\Http\Controllers\DashboardController::class, 'dashPws'])->name('dashboard-pengawas');
 });
 
+Route::group(['prefix' => "kompensasi"], function () {
+    Route::get('/', [App\Http\Controllers\KompensasiController::class, 'index'])->name('kompensasi')->middleware('checkrole:2');
+    // Route::get('/create', [App\Http\Controllers\KompensasiController::class, 'create'])->name('kompensasi-create');
+    // Route::post('/store', [App\Http\Controllers\KompensasiController::class, 'store'])->name('kompensasi-store');
+    // Route::get('/edit/{id}', [App\Http\Controllers\KompensasiController::class, 'edit'])->name('kompensasi-edit');
+    // Route::post('/update/{id}', [App\Http\Controllers\KompensasiController::class, 'update'])->name('kompensasi-update');
+    // Route::get('/delete/{id}', [App\Http\Controllers\KompensasiController::class, 'destroy'])->name('kompensasi-delete');
+});
