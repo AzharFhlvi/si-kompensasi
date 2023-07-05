@@ -1,7 +1,6 @@
 @php
 $container = 'container-fluid';
 $containerNav = 'container-fluid';
-use App\View\Components\ChartComponent;
 @endphp
 
 @extends('layouts/app')
@@ -84,6 +83,9 @@ use App\View\Components\ChartComponent;
         </tr>
       </tbody>
     </table>
+  </div>
+  <div class="card-footer">
+    <a href="{{ route('kompensasi-create') }}" class="btn btn-primary">Tambah Kompensasi</a>
   </div>
 </div>
 

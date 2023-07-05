@@ -91,7 +91,7 @@ Route::group(['prefix' => 'dashboard'], function () {
 
 Route::group(['prefix' => "kompensasi"], function () {
     Route::get('/', [App\Http\Controllers\KompensasiController::class, 'index'])->name('kompensasi')->middleware('checkrole:2');
-    // Route::get('/create', [App\Http\Controllers\KompensasiController::class, 'create'])->name('kompensasi-create');
+    Route::get('/create', [App\Http\Controllers\KompensasiController::class, 'create'])->name('kompensasi-create');
     // Route::post('/store', [App\Http\Controllers\KompensasiController::class, 'store'])->name('kompensasi-store');
     // Route::get('/edit/{id}', [App\Http\Controllers\KompensasiController::class, 'edit'])->name('kompensasi-edit');
     // Route::post('/update/{id}', [App\Http\Controllers\KompensasiController::class, 'update'])->name('kompensasi-update');

@@ -24,7 +24,7 @@ class KompensasiController extends Controller
      */
     public function create()
     {
-        //
+        return view('kompensasi.create');
     }
 
     /**
