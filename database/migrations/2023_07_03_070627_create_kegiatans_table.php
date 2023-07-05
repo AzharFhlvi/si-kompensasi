@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('kegiatans', function (Blueprint $table) {
             $table->id();
+            $table->text('deskripsi');
+            $table->integer('jam');
+            $table->integer('status')->default(0);
+            $table->integer('id_mahasiswa');
             $table->timestamps();
         });
     }

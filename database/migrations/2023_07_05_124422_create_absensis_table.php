@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('absensis', function (Blueprint $table) {
             $table->id();
+            $table->interger('id_mahasiswa');
+            $table->integer('id_matkul');
+            $table->json('absensi')->nullable();
             $table->timestamps();
         });
     }

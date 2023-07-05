@@ -15,6 +15,14 @@ return new class extends Migration
     {
         Schema::create('mahasiswas', function (Blueprint $table) {
             $table->id();
+            $table->string('nim', 15)->unique();
+            $table->string('nama', 255);
+            $table->text('alamat');
+            $table->date('tanggal_lahir');
+            $table->string('no_hp', 15);
+            $table->string('email', 255)->unique();
+            $table->string('jenis_kelamin', 255);
+            $table->integer('id_kelas');
             $table->timestamps();
         });
     }

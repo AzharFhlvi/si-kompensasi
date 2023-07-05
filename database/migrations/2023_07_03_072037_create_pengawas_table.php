@@ -15,6 +15,13 @@ return new class extends Migration
     {
         Schema::create('pengawas', function (Blueprint $table) {
             $table->id();
+            $table->string('nip', 255)->unique();
+            $table->string('nama', 255);
+            $table->text('alamat');
+            $table->date('tanggal_lahir');
+            $table->string('email', 255)->unique();
+            $table->string('no_hp', 15);
+            $table->string('jenis_kelamin', 255);
             $table->timestamps();
         });
     }
