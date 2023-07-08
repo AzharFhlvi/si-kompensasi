@@ -20,18 +20,11 @@ use App\View\Components\ChartComponent;
 <div class="row">
   <div class="col-lg-8 mb-4 order-1">
     <div class="card">
-      <div class="card-header d-flex align-items-center justify-content-between pb-0">
-        <div class="card-title mb-0">
-          <h5 class="m-0 me-2">Absensi</h5>
-          <small class="text-muted">42.82k Total Sales</small>
-        </div>
-       
-      </div>
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-center mb-3">
           <div class="d-flex flex-column align-items-center gap-1">
-            <h2 class="mb-2">8,258</h2>
-            <span>Total Orders</span>
+            <h2 class="mb-2">{{ $sumAbsen }} pertemuan</h2>
+            <span>Total pertemuan tidak hadir</span>
           </div>
           <div id="chartk"></div>
 
@@ -42,14 +35,14 @@ use App\View\Components\ChartComponent;
                 chart: {
                     type: 'pie',
                 },
-                series: chartData.map(item => item.sales),
-                labels: chartData.map(item => item.year),
+                series: chartData.map(item => item.value),
+                labels: chartData.map(item => item.type),
                 colors: ['#008FFB', '#00E396', '#FEB019', '#FF4560', '#775DD0', '#546E7A', '#26a69a', '#D10CE8'],
             };
 
             const chart = new ApexCharts(document.querySelector("#chartk"), options);
             chart.render();
-          </script>
+        </script>
         </div>
       </div>
     </div>
@@ -60,15 +53,33 @@ use App\View\Components\ChartComponent;
         <div class="card">
           <div class="card-body">
             <span class="fw-semibold d-block mb-1">Total jam kompensasi</span>
-            <h3 class="card-title mb-2">12 jam</h3>
+            <h3 class="card-title mb-2">{{ $kompensasi->jumlah_kompensasi }} jam</h3>
           </div>
         </div>
       </div>
       <div class="col-lg-12 col-md-12 col-12 mb-4">
         <div class="card">
           <div class="card-body">
-            <span class="fw-semibold d-block mb-1">Status mahasiswa</span>
-            <h3 class="card-title mb-2">Bermasalah</h3>
+            <span class="fw-semibold d-block mb-1">Status kompensasi</span>
+            <h3 class="card-title mb-2">
+            @if ($kompensasi->status == 0)
+                On Going
+            @elseif ($kompensasi->status == 1)
+                Tuntas
+            @elseif ($kompensasi->status == 2)
+                Tidak Tuntas
+            @endif
+            </h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12 col-md-12 col-12 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <span class="fw-semibold d-block mb-1">Deadline kompensasi</span>
+            <h3 class="card-title mb-2">
+            {{ \Carbon\Carbon::parse($kompensasi->jadwal_kompensasi)->format('d-m-Y') }}
+            </h3>
           </div>
         </div>
       </div>

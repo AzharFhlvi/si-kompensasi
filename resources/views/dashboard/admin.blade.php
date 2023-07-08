@@ -20,7 +20,7 @@ use App\View\Components\ChartComponent;
 <div class="row">
   <div class="col-lg-12 mb-4 order-0">
     <div class="card">
-      <h5 class="card-header">Jumlah mahasiswa kompensasi: 30</h5>
+      <h5 class="card-header">Jumlah mahasiswa kompensasi: {{ $total_kompensasi }}</h5>
     </div>
   </div>
 </div>
@@ -50,8 +50,8 @@ use App\View\Components\ChartComponent;
                 chart: {
                     type: 'pie',
                 },
-                series: chartData.map(item => item.sales),
-                labels: chartData.map(item => item.year),
+                series: chartData.map(item => item.kompensasi),
+                labels: chartData.map(item => item.absen),
                 colors: ['#008FFB', '#00E396', '#FEB019', '#FF4560', '#775DD0', '#546E7A', '#26a69a', '#D10CE8'],
             };
 

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Kompensasi;
+use Carbon\Carbon;
+use App\Models\Mahasiswa;
 
 class DashboardController extends Controller
 {
@@ -50,22 +53,58 @@ class DashboardController extends Controller
 
     public function dashAdm()
     {
+        $now = Carbon::now();
+
+        $total_kompensasi = Kompensasi::whereYear('jadwal_kompensasi', $now->year)
+                                    ->whereMonth('jadwal_kompensasi', $now->month)
+                                    ->count();
+
+        $alfaCount =  Kompensasi::whereYear('jadwal_kompensasi', $now->year)
+        ->whereMonth('jadwal_kompensasi', $now->month)
+        ->sum('alfa');
+
+        $izinCount = Kompensasi::whereYear('jadwal_kompensasi', $now->year)
+        ->whereMonth('jadwal_kompensasi', $now->month)
+        ->sum('izin');
+
+        $sakitCount = Kompensasi::whereYear('jadwal_kompensasi', $now->year)
+        ->whereMonth('jadwal_kompensasi', $now->month)
+        ->sum('sakit');
+
         $chartData = [
-            ['year' => '2019', 'sales' => 100],
-            ['year' => '2020', 'sales' => 200],
-            ['year' => '2021', 'sales' => 150],
+            ['absen' => 'alfa', 'kompensasi' => $alfaCount],
+            ['absen' => 'izin', 'kompensasi' => $izinCount],
+            ['absen' => 'sakit', 'kompensasi' => $sakitCount],
         ];
-        return view('dashboard.admin', compact('chartData'));
+
+        // dd($chartData);
+        return view('dashboard.admin', compact('total_kompensasi','chartData'));
     }
 
     public function dashMhs()
     {
-        $chartData = [
-            ['year' => '2019', 'sales' => 100],
-            ['year' => '2020', 'sales' => 200],
-            ['year' => '2021', 'sales' => 150],
+        $userEmail = Auth::user()->email;
+        $domain = '@mahasiswa.poliban.ac.id';
+
+        // Extract the nim value from the email
+        $userNim = substr($userEmail, 0, strpos($userEmail, $domain));
+
+        $kompensasi = Kompensasi::join('mahasiswas', 'kompensasis.id_mahasiswa', '=', 'mahasiswas.id')
+            ->where('mahasiswas.nim', $userNim)
+            ->select('kompensasis.*')
+            ->orderBy('kompensasis.mulai_kompensasi', 'desc')
+            ->first();
+
+        $sumAbsen = $kompensasi->alfa + $kompensasi->izin + $kompensasi->sakit;
+        
+
+       $chartData = [
+            ['type' => 'Alfa', 'value' => $kompensasi->alfa ?? 0],
+            ['type' => 'Izin', 'value' => $kompensasi->izin ?? 0],
+            ['type' => 'Sakit', 'value' => $kompensasi->sakit ?? 0],
         ];
-        return view('dashboard.mahasiswa', compact('chartData'));
+
+        return view('dashboard.mahasiswa', compact('chartData', 'kompensasi', 'sumAbsen'));
     }
 
 }
