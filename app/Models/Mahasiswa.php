@@ -13,4 +13,9 @@ class Mahasiswa extends Model
     {
         return $this->hasOne(Kompensasi::class, 'id_mahasiswa');
     }
+
+    public function kegiatan()
+    {
+        return $this->hasMany(Kegiatan::class, 'id_mahasiswa');
+    }
 }

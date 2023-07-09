@@ -24,34 +24,34 @@ $containerNav = 'container-fluid';
           <th>No</th>
           <th>Tanggal</th>
           <th>Kegiatan</th>
-          <th>Waktu</th>
-          <th>Jam kompensasi</th>
+          <th>Lama kegiatan</th>
           <th>Status</th>
         </tr>
       </thead>
       <tbody class="table-border-bottom-0">
+        @foreach($kegiatanList as $kegiatan)
         <tr>
           <td>1</td>
-          <td>{{ date('D, j-F-Y') }}</td>
+          <td>{{ $kegiatan->created_at->format('D, j F Y') }}</td>
           <td>
             <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-              Bersih-bersih
+              {{$kegiatan->deskripsi}}
             </ul>
           </td>
-          <td>09.00 - 12.00</td>
           <td>
             3 jam
           </td>
           <td>
-            @if($kompensasi->status == 0)
+            @if($kegiatan->status == 0)
             <span class="badge bg-warning">Menunggu</span>
-            @elseif($kompensasi->status == 1)
+            @elseif($kegiatan->status == 1)
             <span class="badge bg-success">Disetujui</span>
-            @elseif($kompensasi->status == 2)
+            @elseif($kegiatan->status == 2)
             <span class="badge bg-danger">Ditolak</span>
             @endif
           </td>
         </tr>
+        @endforeach
       </tbody>
     </table>
   </div>

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Kompensasi;
 use Carbon\Carbon;
 use App\Models\Mahasiswa;
+use App\Utils\UserUtils;
 
 class DashboardController extends Controller
 {
@@ -83,13 +84,7 @@ class DashboardController extends Controller
 
     public function dashMhs()
     {
-        $userEmail = Auth::user()->email;
-        $domain = '@mahasiswa.poliban.ac.id';
-
-        // Extract the nim value from the email
-        $userNim = substr($userEmail, 0, strpos($userEmail, $domain));
-
-        $mahasiswa = Mahasiswa::where('nim', $userNim)->first();
+        $mahasiswa = UserUtils::getCurrentMahasiswa();
 
         $kompensasi = $mahasiswa->kompensasi;
 

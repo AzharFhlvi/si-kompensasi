@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Mahasiswa;
 use App\Models\Pengawas;
+use App\Models\Kegiatan;
+use App\Utils\UserUtils;
 
 class KompensasiController extends Controller
 {
@@ -17,17 +19,12 @@ class KompensasiController extends Controller
      */
     public function index()
     {
-        $userEmail = Auth::user()->email;
-        $domain = '@mahasiswa.poliban.ac.id';
-
-        // Extract the nim value from the email
-        $userNim = substr($userEmail, 0, strpos($userEmail, $domain));
-
-        $mahasiswa = Mahasiswa::where('nim', $userNim)->first();
+        $mahasiswa = UserUtils::getCurrentMahasiswa();
 
         $kompensasi = $mahasiswa->kompensasi;
+        $kegiatanList = $mahasiswa->kegiatan;
 
-        return view('kompensasi.index', compact('kompensasi'));
+        return view('kompensasi.index', compact('kompensasi', 'kegiatanList'));
     }
 
     /**
@@ -48,7 +45,23 @@ class KompensasiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'deskripsi' => 'required',
+            'jam' => [
+                'required',
+                'integer',
+                'min:1',
+            ],
+        ]);
+
+        // Create a new Kegiatan instance
+        $kegiatan = new Kegiatan();
+        $kegiatan->deskripsi = $validatedData['deskripsi'];
+        $kegiatan->jam = $validatedData['jam'];
+        $kegiatan->status = 0;
+        $kegiatan->id_mahasiswa = UserUtils::getCurrentMahasiswa()->id;
+        $kegiatan->save();
+        return redirect()->back()->with('success', 'Form submitted successfully!');
     }
 
     /**
