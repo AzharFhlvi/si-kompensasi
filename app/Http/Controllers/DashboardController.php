@@ -89,11 +89,9 @@ class DashboardController extends Controller
         // Extract the nim value from the email
         $userNim = substr($userEmail, 0, strpos($userEmail, $domain));
 
-        $kompensasi = Kompensasi::join('mahasiswas', 'kompensasis.id_mahasiswa', '=', 'mahasiswas.id')
-            ->where('mahasiswas.nim', $userNim)
-            ->select('kompensasis.*')
-            ->orderBy('kompensasis.mulai_kompensasi', 'desc')
-            ->first();
+        $mahasiswa = Mahasiswa::where('nim', $userNim)->first();
+
+        $kompensasi = $mahasiswa->kompensasi;
 
         $sumAbsen = $kompensasi->alfa + $kompensasi->izin + $kompensasi->sakit;
         

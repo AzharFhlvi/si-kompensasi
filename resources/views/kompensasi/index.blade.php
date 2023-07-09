@@ -14,8 +14,8 @@ $containerNav = 'container-fluid';
 </h4>
 
 <div class="card">
-  <h5 class="card-header">Pak Ruslan | Perpustakaan
-    <span class="text-muted fw-light" style="float: right;">Kompensasi : 100 jam</span>
+  <h5 class="card-header">{{ $kompensasi->pengawas->nama }} | {{ $kompensasi->ruangan->nama_ruangan }}
+    <span class="text-muted fw-light" style="float: right;">Kompensasi : {{$kompensasi->jumlah_kompensasi}} jam</span>
   </h5>
   <div class="table-responsive text-nowrap">
     <table class="table table-striped">
@@ -26,6 +26,7 @@ $containerNav = 'container-fluid';
           <th>Kegiatan</th>
           <th>Waktu</th>
           <th>Jam kompensasi</th>
+          <th>Status</th>
         </tr>
       </thead>
       <tbody class="table-border-bottom-0">
@@ -41,44 +42,14 @@ $containerNav = 'container-fluid';
           <td>
             3 jam
           </td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>{{ date('D, j-F-Y') }}</td>
           <td>
-            <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-              Bersih-bersih
-            </ul>
-          </td>
-          <td>09.00 - 12.00</td>
-          <td>
-            3 jam
-          </td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>{{ date('D, j-F-Y') }}</td>
-          <td>
-            <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-              Bersih-bersih
-            </ul>
-          </td>
-          <td>09.00 - 12.00</td>
-          <td>
-            3 jam
-          </td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>{{ date('D, j-F-Y') }}</td>
-          <td>
-            <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-              Bersih-bersih
-            </ul>
-          </td>
-          <td>09.00 - 12.00</td>
-          <td>
-            3 jam
+            @if($kompensasi->status == 0)
+            <span class="badge bg-warning">Menunggu</span>
+            @elseif($kompensasi->status == 1)
+            <span class="badge bg-success">Disetujui</span>
+            @elseif($kompensasi->status == 2)
+            <span class="badge bg-danger">Ditolak</span>
+            @endif
           </td>
         </tr>
       </tbody>

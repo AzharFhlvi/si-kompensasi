@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Kompensasi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Mahasiswa;
+use App\Models\Pengawas;
 
 class KompensasiController extends Controller
 {
@@ -14,7 +17,17 @@ class KompensasiController extends Controller
      */
     public function index()
     {
-        return view('kompensasi.index');
+        $userEmail = Auth::user()->email;
+        $domain = '@mahasiswa.poliban.ac.id';
+
+        // Extract the nim value from the email
+        $userNim = substr($userEmail, 0, strpos($userEmail, $domain));
+
+        $mahasiswa = Mahasiswa::where('nim', $userNim)->first();
+
+        $kompensasi = $mahasiswa->kompensasi;
+
+        return view('kompensasi.index', compact('kompensasi'));
     }
 
     /**
