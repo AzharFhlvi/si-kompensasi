@@ -13,7 +13,12 @@ $containerNav = 'container-fluid';
   <div class="row">
     <div class="col-lg-6">
       <div class="card mb-4">
-        <h5 class="card-header">Kegiatan kompensasi</h5>
+        <h5 class="card-header d-flex align-items-center">
+          Kegiatan kompensasi
+          <a href="{{ url()->previous() }}" class="btn btn-link btn-sm ms-auto">
+            <i class="bx bx-left-arrow-alt"></i>
+          </a>
+        </h5>
         <div class="card-body demo-vertical-spacing demo-only-element">
             <div class="input-group">
               <span class="input-group-text" id="deskripsi">Deskripsi</span>
