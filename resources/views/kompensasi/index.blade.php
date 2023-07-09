@@ -31,7 +31,7 @@ $containerNav = 'container-fluid';
       <tbody class="table-border-bottom-0">
         @foreach($kegiatanList as $kegiatan)
         <tr>
-          <td>1</td>
+          <td>{{ $loop->iteration }}</td>
           <td>{{ $kegiatan->created_at->format('D, j F Y') }}</td>
           <td>
             <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
