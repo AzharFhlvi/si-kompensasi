@@ -13,6 +13,9 @@
 <!-- Pricing Modal JS-->
 @stack('pricing-script')
 <!-- END: Pricing Modal JS-->
+<!-- Jurusan JS-->
+@stack('jurusan-script')
+<!-- END: Jurusan JS-->
 <!-- BEGIN: Page JS-->
 @yield('page-script')
 <!-- END: Page JS-->

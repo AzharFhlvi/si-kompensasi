@@ -52,34 +52,65 @@ class DashboardController extends Controller
         return redirect()->route('dashboard-' . $dashboardRoute);
     }
 
-    public function dashAdm()
+    public function getKompensasi()
     {
         $now = Carbon::now();
 
-        $total_kompensasi = Kompensasi::whereYear('jadwal_kompensasi', $now->year)
-                                    ->whereMonth('jadwal_kompensasi', $now->month)
-                                    ->count();
-
-        $alfaCount =  Kompensasi::whereYear('jadwal_kompensasi', $now->year)
+        return Kompensasi::whereYear('jadwal_kompensasi', $now->year)
         ->whereMonth('jadwal_kompensasi', $now->month)
-        ->sum('alfa');
+        ->get();
+    }
 
-        $izinCount = Kompensasi::whereYear('jadwal_kompensasi', $now->year)
-        ->whereMonth('jadwal_kompensasi', $now->month)
-        ->sum('izin');
+    public function getKompensasiOnGoing()
+    {
+        return $this->getKompensasi()->where('status', 0);
+    }
 
-        $sakitCount = Kompensasi::whereYear('jadwal_kompensasi', $now->year)
-        ->whereMonth('jadwal_kompensasi', $now->month)
-        ->sum('sakit');
+    public function getKompensasiTuntas()
+    {
+        return $this->getKompensasi()->where('status', 1);
+    }
 
-        $chartData = [
-            ['absen' => 'alfa', 'kompensasi' => $alfaCount],
-            ['absen' => 'izin', 'kompensasi' => $izinCount],
-            ['absen' => 'sakit', 'kompensasi' => $sakitCount],
+    public function getKompensasiTidakTuntas()
+    {
+        return $this->getKompensasi()->where('status', 2);
+    }
+
+    public function dashAdm()
+    {
+        $total_kompensasi = $this->getKompensasi()->count();
+        
+        $alfaCountOnGoing = $this->getKompensasi()->sum('alfa');
+        $izinCountOnGoing = $this->getKompensasi()->sum('izin');
+        $sakitCountOnGoing = $this->getKompensasi()->sum('sakit');
+        $chartDataOnGoing = [
+            ['type' => 'Alfa', 'value' => $alfaCountOnGoing],
+            ['type' => 'Izin', 'value' => $izinCountOnGoing],
+            ['type' => 'Sakit', 'value' => $sakitCountOnGoing],
         ];
-
-        // dd($chartData);
-        return view('dashboard.admin', compact('total_kompensasi','chartData'));
+        $onGoingTotal = $this->getKompensasiOnGoing()->count();
+        
+        $alfaCountTuntas = $this->getKompensasi()->sum('alfa');
+        $izinCountTuntas = $this->getKompensasi()->sum('izin');
+        $sakitCountTuntas = $this->getKompensasi()->sum('sakit');
+        $chartDataTuntas = [
+            ['type' => 'Alfa', 'value' => $alfaCountTuntas],
+            ['type' => 'Izin', 'value' => $izinCountTuntas],
+            ['type' => 'Sakit', 'value' => $sakitCountTuntas],
+        ];
+        $tuntasTotal = $this->getKompensasiTuntas()->count();
+        
+        $alfaCountTidakTuntas = $this->getKompensasi()->sum('alfa');
+        $izinCountTidakTuntas = $this->getKompensasi()->sum('izin');
+        $sakitCountTidakTuntas = $this->getKompensasi()->sum('sakit');
+        $chartDataTidakTuntas = [
+            ['type' => 'Alfa', 'value' => $alfaCountTidakTuntas],
+            ['type' => 'Izin', 'value' => $izinCountTidakTuntas],
+            ['type' => 'Sakit', 'value' => $sakitCountTidakTuntas],
+        ];
+        $tidakTuntasTotal = $this->getKompensasiTidakTuntas()->count();
+        
+        return view('dashboard.admin', compact('total_kompensasi','chartDataOnGoing', 'onGoingTotal', 'chartDataTuntas', 'tuntasTotal', 'chartDataTidakTuntas', 'tidakTuntasTotal'));
     }
 
     public function dashMhs()

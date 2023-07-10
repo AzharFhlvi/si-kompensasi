@@ -2,6 +2,8 @@
 namespace App\Utils;
 
 use App\Models\Mahasiswa;
+use App\Models\Prodi;
+use App\Models\Kelas;
 use Illuminate\Support\Facades\Auth;
 
 class UserUtils
@@ -15,5 +17,17 @@ class UserUtils
         $userNim = substr($userEmail, 0, strpos($userEmail, $domain));
 
         return Mahasiswa::where('nim', $userNim)->first();
+    }
+
+    public static function getProdi($jurusanId)
+    {
+        $prodi = Prodi::where('id_jurusan', $jurusanId)->get();
+        return response()->json($prodi);
+    }
+
+    public static function getKelas($prodiId)
+    {
+        $kelas = Kelas::where('id_prodi', $jurusanId)->get();
+        return response()->json($kelas);
     }
 }

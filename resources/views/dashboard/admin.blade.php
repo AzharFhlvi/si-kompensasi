@@ -30,32 +30,31 @@ use App\View\Components\ChartComponent;
     <div class="card h-100">
       <div class="card-header d-flex align-items-center justify-content-between pb-0">
         <div class="card-title mb-0">
-          <h5 class="m-0 me-2">Mahasiswa kompensasi</h5>
-          <small class="text-muted">42.82k Total Sales</small>
+          <h5 class="m-0 me-2">On going</h5>
         </div>
        
       </div>
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-center mb-3">
           <div class="d-flex flex-column align-items-center gap-1">
-            <h2 class="mb-2">8,258</h2>
-            <span>Total Orders</span>
+            <h2 class="mb-2">{{ $onGoingTotal }}</h2>
+            <span>Total mahasiswa</span>
           </div>
-          <div id="chartk"></div>
+          <div id="chartOnGoing"></div>
 
           <script>
-            const chartData = @json($chartData);
+            const chartDataOnGoing = @json($chartDataOnGoing);
 
-            const options = {
+            const onGoingOptions = {
                 chart: {
                     type: 'pie',
                 },
-                series: chartData.map(item => item.kompensasi),
-                labels: chartData.map(item => item.absen),
+                series: chartDataOnGoing.map(item => item.value),
+                labels: chartDataOnGoing.map(item => item.type),
                 colors: ['#008FFB', '#00E396', '#FEB019', '#FF4560', '#775DD0', '#546E7A', '#26a69a', '#D10CE8'],
             };
 
-            const chart = new ApexCharts(document.querySelector("#chartk"), options);
+            const chart = new ApexCharts(document.querySelector("#chartOnGoing"), onGoingOptions);
             chart.render();
           </script>
         </div>
@@ -67,32 +66,67 @@ use App\View\Components\ChartComponent;
     <div class="card h-100">
       <div class="card-header d-flex align-items-center justify-content-between pb-0">
         <div class="card-title mb-0">
-          <h5 class="m-0 me-2">Bebas masalah</h5>
-          <small class="text-muted">42.82k Total Sales</small>
+          <h5 class="m-0 me-2">Tuntas</h5>
         </div>
        
       </div>
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-center mb-3">
           <div class="d-flex flex-column align-items-center gap-1">
-            <h2 class="mb-2">8,258</h2>
-            <span>Total Orders</span>
+            <h2 class="mb-2">{{ $tuntasTotal }}</h2>
+            <span>Total mahasiswa</span>
           </div>
-          <div id="chartku"></div>
+          <div id="chartTuntas"></div>
 
           <script>
-            const chartData2 = @json($chartData);
+            const chartTuntas = @json($chartDataTuntas);
 
-            const options2 = {
+            const tuntasOptions = {
                 chart: {
                     type: 'pie',
                 },
-                series: chartData.map(item => item.sales),
-                labels: chartData.map(item => item.year),
+                series: chartDataTuntas.map(item => item.value),
+                labels: chartDataTuntas.map(item => item.type),
                 colors: ['#008FFB', '#00E396', '#FEB019', '#FF4560', '#775DD0', '#546E7A', '#26a69a', '#D10CE8'],
             };
 
-            const chart2 = new ApexCharts(document.querySelector("#chartku"), options);
+            const chart2 = new ApexCharts(document.querySelector("#chartTuntas"), tuntasOptions);
+            chart2.render();
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-lg-6 col-xl-6 order-0 mb-4">
+    <div class="card h-100">
+      <div class="card-header d-flex align-items-center justify-content-between pb-0">
+        <div class="card-title mb-0">
+          <h5 class="m-0 me-2">Tidak tuntas</h5>
+        </div>
+       
+      </div>
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div class="d-flex flex-column align-items-center gap-1">
+            <h2 class="mb-2">{{ $tidakTuntasTotal }}</h2>
+            <span>Total mahasiswa</span>
+          </div>
+          <div id="chartTidakTuntas"></div>
+
+          <script>
+            const chartTidakTuntas = @json($chartDataTidakTuntas);
+
+            const tuntasOptions = {
+                chart: {
+                    type: 'pie',
+                },
+                series: chartDataTidakTuntas.map(item => item.value),
+                labels: chartDataTidakTuntas.map(item => item.type),
+                colors: ['#008FFB', '#00E396', '#FEB019', '#FF4560', '#775DD0', '#546E7A', '#26a69a', '#D10CE8'],
+            };
+
+            const chart2 = new ApexCharts(document.querySelector("#chartTidakTuntas"), tuntasOptions);
             chart2.render();
           </script>
         </div>

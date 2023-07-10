@@ -7,13 +7,29 @@
       "url": "/",
       "name": "Dashboard",
       "icon": "menu-icon tf-icons bx bx-home-circle",
-      "slug": "dashboard-analytics"
+      "slug": "dashboard-analytics",
+      "role": [1, 2, 3]
+      
     },
     {
       "url":"/kompensasi",
       "name":"Kompensasi",
       "icon":"menu-icon tf-icons bx bxs-report",
-      "slug":"kompensasi"
+      "slug":"kompensasi",
+      "role":2
+    },
+    {
+      "name":"Kompensasi",
+      "icon":"menu-icon tf-icons bx bxs-report",
+      "slug":"kompensasi",
+      "role":1,
+      "submenu": [
+        {
+          "url": "/kompensasi/input",
+          "name": "Input Kompensasi",
+          "slug": "kompensasi-input-kompensasi"
+        }
+      ]
     }
     
   ]

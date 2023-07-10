@@ -42,7 +42,7 @@ use App\View\Components\ChartComponent;
 
             const chart = new ApexCharts(document.querySelector("#chartk"), options);
             chart.render();
-        </script>
+          </script>
         </div>
       </div>
     </div>
