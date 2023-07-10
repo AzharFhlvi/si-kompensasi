@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Absensi;
 use App\Models\Mahasiswa;
+use App\Models\Matkul;
 use App\Models\Pengawas;
 use App\Models\Kegiatan;
 use App\Models\Jurusan;
@@ -93,12 +94,12 @@ class KompensasiController extends Controller
     public function inputStore(Request $request)
     {
         $validatedData = $request->validate([
-            'jurusan' => 'required',
-            'prodi' => 'required',
-            'kelas' => 'required',
-            'pengawas' => 'required',
-            'ruangan' => 'required',
-            'mulai_kompensasi' => 'required',
+            'jurusan' => 'required|numeric',
+            'prodi' => 'required|numeric',
+            'kelas' => 'required|numeric',
+            'pengawas' => 'required|numeric',
+            'ruangan' => 'required|numeric',
+            'mulai_kompensasi' => 'required|date|after_or_equal:today',
         ]);
 
         // Retrieve the mahasiswas with the specified kelas_id
@@ -115,6 +116,7 @@ class KompensasiController extends Controller
             $kompensasi->id_ruangan = $validatedData['ruangan'];
             $kompensasi->id_pengawas = $validatedData['pengawas'];
             $kompensasi->mulai_kompensasi = $validatedData['mulai_kompensasi'];
+            $kompensasi->jadwal_kompensasi = $validatedData['mulai_kompensasi'];
             
             // Calculate jumlah_kompensasi based on the absensi records for the mahasiswa
             $jumlahKompensasi = $this->calculateJumlahKompensasi($absensis, $mahasiswa->id);
@@ -142,22 +144,31 @@ class KompensasiController extends Controller
     private function calculateJumlahKompensasi($absensis, $mahasiswaId)
     {
         $mahasiswaAbsensis = $absensis->where('id_mahasiswa', $mahasiswaId);
-        
+
         $jumlahKompensasi = $mahasiswaAbsensis->sum(function ($absensi) {
             $absensiArray = collect(json_decode($absensi->absensi, true));
-            $alfaCount = $absensiArray->filter(function ($item) {
-                return $item === 'alfa';
-            })->count();
+            $matkulId = $absensi->id_matkul;
+
+            // Retrieve the sks value from the matkuls table based on the matkulId
+            $sks = Matkul::where('id', $matkulId)->value('sks');
+
             $izinCount = $absensiArray->filter(function ($item) {
                 return $item === 'izin';
             })->count();
+
             $sakitCount = $absensiArray->filter(function ($item) {
                 return $item === 'sakit';
             })->count();
-            
-            return $alfaCount + $izinCount + $sakitCount;
+
+            $alfaCount = $absensiArray->filter(function ($item) {
+                return $item === 'alfa';
+            })->count();
+
+            $jumlahKompensasi = ($izinCount * 1 * $sks) + ($sakitCount * 0.5 * $sks) + ($alfaCount * 2 * $sks);
+
+            return $jumlahKompensasi;
         });
-        
+
         return $jumlahKompensasi;
     }
 
