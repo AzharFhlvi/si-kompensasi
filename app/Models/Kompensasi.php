@@ -20,4 +20,9 @@ class Kompensasi extends Model
     {
         return $this->belongsTo(Ruangan::class, 'id_ruangan');
     }
+
+    public function mahasiswa()
+    {
+        return $this->belongsTo(Mahasiswa::class, 'id_mahasiswa');
+    }
 }

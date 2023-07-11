@@ -28,6 +28,11 @@
           "url": "/kompensasi/input",
           "name": "Input Kompensasi",
           "slug": "kompensasi-input-kompensasi"
+        },
+        {
+          "url": "/kompensasi/master",
+          "name": "Data Master",
+          "slug": "kompensasi-master"
         }
       ]
     }

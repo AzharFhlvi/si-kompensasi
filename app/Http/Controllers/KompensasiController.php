@@ -15,6 +15,7 @@ use App\Models\Prodi;
 use App\Models\Kelas;
 use App\Models\Ruangan;
 use App\Utils\UserUtils;
+use Carbon\Carbon;
 
 class KompensasiController extends Controller
 {
@@ -186,6 +187,41 @@ class KompensasiController extends Controller
         });
         
         return $value;
+    }
+
+    public function master()
+    {
+        $currentDate = Carbon::now()->toDateTimeString();
+        $kompensasiList = Kompensasi::where(function ($query) use ($currentDate) {
+            $query->where('jumlah_kompensasi', 0)
+                ->where('status', 0);
+        })
+        ->orWhere(function ($query) use ($currentDate) {
+            $query->where('jadwal_kompensasi', '<', $currentDate)
+                ->where('status', 0);
+        })
+        ->get();
+            
+        return view('kompensasi.master', compact('kompensasiList'));
+    }
+
+    public function tuntas(Request $request)
+    {
+        Kompensasi::where('jumlah_kompensasi', 0)
+        ->where('status', 0)
+        ->update(['status' => 1]);
+
+        return redirect()->back()->with('success', 'Kompensasi berhasil ditandai tuntas.');
+    }
+
+    public function tolak(Request $request)
+    {
+        $currentDate = Carbon::now()->toDateTimeString();
+        Kompensasi::where('jadwal_kompensasi', '<', $currentDate)
+        ->where('status', 0)
+        ->update(['status' => 2]);
+
+        return redirect()->back()->with('success', 'Kompensasi berhasil ditandai tuntas.');
     }
 
 

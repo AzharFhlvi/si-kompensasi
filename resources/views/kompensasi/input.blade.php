@@ -8,6 +8,11 @@ $containerNav = 'container-fluid';
 @section('title', 'Fluid - Layouts')
 
 @section('content')
+<h4 class="fw-bold py-3 mb-4">
+  <span class="text-muted fw-light">Kompensasi /</span> Input Kompensasi
+  <span class="text-muted fw-light" style="float: right;">{{ date('F j, Y') }}</span>
+  <div style="clear: both;"></div>
+</h4>
 <form action="{{ route('kompensasi-input-store') }}" method="POST">
   @csrf
   <div class="row">
