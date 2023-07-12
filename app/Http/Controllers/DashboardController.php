@@ -131,4 +131,19 @@ class DashboardController extends Controller
         return view('dashboard.mahasiswa', compact('chartData', 'kompensasi', 'sumAbsen'));
     }
 
+    public function dashPws()
+    {
+        // Get the pengawas
+        $pengawas = UserUtils::getCurrentPengawas();
+
+        // Retrieve the kompensasi data based on the pengawas_id
+        $kompensasis = Kompensasi::with(['mahasiswa.kelas', 'ruangan', 'pengawas'])
+            ->where('id_pengawas', $pengawas->id)
+            ->orderBy('mulai_kompensasi', 'asc')
+            ->get()
+            ->groupBy('kelas');
+
+        return view('dashboard.pengawas', compact('kompensasis'));
+    }
+
 }

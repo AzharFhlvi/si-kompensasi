@@ -98,6 +98,7 @@ Route::group(['prefix' => "kompensasi"], function () {
     Route::get('/master', [App\Http\Controllers\KompensasiController::class, 'master'])->name('kompensasi-master')->middleware('checkrole:1');
     Route::post('/tuntas', [App\Http\Controllers\KompensasiController::class, 'tuntas'])->name('kompensasi-tuntas')->middleware('checkrole:1');
     Route::post('/tolak', [App\Http\Controllers\KompensasiController::class, 'tolak'])->name('kompensasi-tolak')->middleware('checkrole:1');
+    Route::get('/pengawas/detil-kelas/{id_kelas}', [App\Http\Controllers\KompensasiController::class, 'pengawasDetilKelas'])->name('kompensasi-pengawas-detil-kelas')->middleware('checkrole:3');
     // Route::get('/edit/{id}', [App\Http\Controllers\KompensasiController::class, 'edit'])->name('kompensasi-edit');
     // Route::post('/update/{id}', [App\Http\Controllers\KompensasiController::class, 'update'])->name('kompensasi-update');
     // Route::get('/delete/{id}', [App\Http\Controllers\KompensasiController::class, 'destroy'])->name('kompensasi-delete');

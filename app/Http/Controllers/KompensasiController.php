@@ -224,6 +224,11 @@ class KompensasiController extends Controller
         return redirect()->back()->with('success', 'Kompensasi berhasil ditandai tuntas.');
     }
 
+    public function pengawasDetilKelas($id_kelas)
+    {
+        dd('asd');
+    }
+
 
     /**
      * Display the specified resource.

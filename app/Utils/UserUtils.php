@@ -2,6 +2,7 @@
 namespace App\Utils;
 
 use App\Models\Mahasiswa;
+use App\Models\Pengawas;
 use App\Models\Prodi;
 use App\Models\Kelas;
 use Illuminate\Support\Facades\Auth;
@@ -29,5 +30,12 @@ class UserUtils
     {
         $kelas = Kelas::where('id_prodi', $jurusanId)->get();
         return response()->json($kelas);
+    }
+
+    public static function getCurrentPengawas()
+    {
+        $userIdentifier = Auth::user()->identifier;
+
+        return Pengawas::where('id', $userIdentifier)->first();
     }
 }
