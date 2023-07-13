@@ -226,7 +226,17 @@ class KompensasiController extends Controller
 
     public function pengawasDetilKelas($id_kelas)
     {
-        dd('asd');
+        $pengawas = UserUtils::getCurrentPengawas();
+
+        $kompensasiList = Kompensasi::whereHas('mahasiswa', function ($query) use ($id_kelas) {
+            $query->where('id_kelas', $id_kelas);
+        })
+            ->where('id_pengawas', $pengawas->id)
+            ->get();
+
+        $namaKelas = Kelas::where('id', $id_kelas)->value('nama_kelas');
+
+        return view('kompensasi.detil-mhs', compact('kompensasiList', 'namaKelas'));
     }
 
 

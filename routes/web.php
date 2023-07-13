@@ -104,4 +104,9 @@ Route::group(['prefix' => "kompensasi"], function () {
     // Route::get('/delete/{id}', [App\Http\Controllers\KompensasiController::class, 'destroy'])->name('kompensasi-delete');
 });
 
+Route::group(['prefix' => 'kegiatan'], function () {
+    Route::get('/mahasiswa/{id}', [App\Http\Controllers\KegiatanController::class, 'index'])->name('kegiatan-mhs')->middleware('checkrole:3');
+    Route::post('/store/{id}', [App\Http\Controllers\KegiatanController::class, 'store'])->name('kegiatan-store')->middleware('checkrole:3');
+});
+
 
