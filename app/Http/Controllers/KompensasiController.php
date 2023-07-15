@@ -16,6 +16,7 @@ use App\Models\Kelas;
 use App\Models\Ruangan;
 use App\Utils\UserUtils;
 use Carbon\Carbon;
+use Twilio\Rest\Client;
 
 class KompensasiController extends Controller
 {
@@ -138,8 +139,39 @@ class KompensasiController extends Controller
             $kompensasi->save();
         }
 
+        $pengawas = Pengawas::where('id', $validatedData['pengawas'])->first();
+        $kelas = Kelas::where('id', $validatedData['kelas'])->first();
+        $ruangan = Ruangan::where('id', $validatedData['ruangan'])->first();
+
+        $this->sendWhatsapp($pengawas, $kelas, $ruangan, $validatedData['mulai_kompensasi']);
+
         // Redirect or return a response
         return redirect()->back()->with('success', 'Kompensasi records created successfully.');
+    }
+
+    public function sendWhatsapp($pengawas, $kelas, $ruangan, $jadwal)
+    {
+        $twilioSid = getenv('TWILIO_SID');
+        $twilioToken = getenv('TWILIO_AUTH_TOKEN');
+        $twilioFrom = getenv('TWILIO_FROM');
+    
+        $client = new Client($twilioSid, $twilioToken);
+        $messageBody = "Pengawas dengan nama ". $pengawas->nama ." telah dijadwalkan untuk mengawas kelas " . $kelas->nama . " di ruangan " . $ruangan->nama . "pada tanggal " . $jadwal;
+        $message = $client->messages
+                  ->create("whatsapp:".$pengawas->no_hp, // to
+                  array(
+                    "from" => "whatsapp:". $twilioFrom,
+                    "body" => $messageBody,
+                  )
+                  );
+
+    //               $message = $twilio->messages
+    //   ->create("whatsapp:+6283863115468", // to
+    //     array(
+    //       "from" => "whatsapp:+14155238886",
+    //       "body" => Your appointment is coming up on July 21 at 3PM
+    //     )
+    //   );
     }
 
     private function calculateJumlahKompensasi($absensis, $mahasiswaId)
