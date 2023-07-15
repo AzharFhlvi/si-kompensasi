@@ -80,9 +80,9 @@ class DashboardController extends Controller
     {
         $total_kompensasi = $this->getKompensasi()->count();
         
-        $alfaCountOnGoing = $this->getKompensasi()->sum('alfa');
-        $izinCountOnGoing = $this->getKompensasi()->sum('izin');
-        $sakitCountOnGoing = $this->getKompensasi()->sum('sakit');
+        $alfaCountOnGoing = $this->getKompensasiOnGoing()->sum('alfa');
+        $izinCountOnGoing = $this->getKompensasiOnGoing()->sum('izin');
+        $sakitCountOnGoing = $this->getKompensasiOnGoing()->sum('sakit');
         $chartDataOnGoing = [
             ['type' => 'Alfa', 'value' => $alfaCountOnGoing],
             ['type' => 'Izin', 'value' => $izinCountOnGoing],
@@ -90,9 +90,9 @@ class DashboardController extends Controller
         ];
         $onGoingTotal = $this->getKompensasiOnGoing()->count();
         
-        $alfaCountTuntas = $this->getKompensasi()->sum('alfa');
-        $izinCountTuntas = $this->getKompensasi()->sum('izin');
-        $sakitCountTuntas = $this->getKompensasi()->sum('sakit');
+        $alfaCountTuntas = $this->getKompensasiTuntas()->sum('alfa');
+        $izinCountTuntas = $this->getKompensasiTuntas()->sum('izin');
+        $sakitCountTuntas = $this->getKompensasiTuntas()->sum('sakit');
         $chartDataTuntas = [
             ['type' => 'Alfa', 'value' => $alfaCountTuntas],
             ['type' => 'Izin', 'value' => $izinCountTuntas],
@@ -100,9 +100,9 @@ class DashboardController extends Controller
         ];
         $tuntasTotal = $this->getKompensasiTuntas()->count();
         
-        $alfaCountTidakTuntas = $this->getKompensasi()->sum('alfa');
-        $izinCountTidakTuntas = $this->getKompensasi()->sum('izin');
-        $sakitCountTidakTuntas = $this->getKompensasi()->sum('sakit');
+        $alfaCountTidakTuntas = $this->getKompensasiTidakTuntas()->sum('alfa');
+        $izinCountTidakTuntas = $this->getKompensasiTidakTuntas()->sum('izin');
+        $sakitCountTidakTuntas = $this->getKompensasiTidakTuntas()->sum('sakit');
         $chartDataTidakTuntas = [
             ['type' => 'Alfa', 'value' => $alfaCountTidakTuntas],
             ['type' => 'Izin', 'value' => $izinCountTidakTuntas],

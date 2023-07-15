@@ -85,8 +85,8 @@ use App\View\Components\ChartComponent;
                 chart: {
                     type: 'pie',
                 },
-                series: chartDataTuntas.map(item => item.value),
-                labels: chartDataTuntas.map(item => item.type),
+                series: chartTuntas.map(item => item.value),
+                labels: chartTuntas.map(item => item.type),
                 colors: ['#008FFB', '#00E396', '#FEB019', '#FF4560', '#775DD0', '#546E7A', '#26a69a', '#D10CE8'],
             };
 
@@ -117,17 +117,17 @@ use App\View\Components\ChartComponent;
           <script>
             const chartTidakTuntas = @json($chartDataTidakTuntas);
 
-            const tuntasOptions = {
+            const tidakTuntasOptions = {
                 chart: {
                     type: 'pie',
                 },
-                series: chartDataTidakTuntas.map(item => item.value),
-                labels: chartDataTidakTuntas.map(item => item.type),
+                series: chartTidakTuntas.map(item => item.value),
+                labels: chartTidakTuntas.map(item => item.type),
                 colors: ['#008FFB', '#00E396', '#FEB019', '#FF4560', '#775DD0', '#546E7A', '#26a69a', '#D10CE8'],
             };
 
-            const chart2 = new ApexCharts(document.querySelector("#chartTidakTuntas"), tuntasOptions);
-            chart2.render();
+            const chart3 = new ApexCharts(document.querySelector("#chartTidakTuntas"), tidakTuntasOptions);
+            chart3.render();
           </script>
         </div>
       </div>
