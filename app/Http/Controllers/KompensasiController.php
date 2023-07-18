@@ -143,7 +143,7 @@ class KompensasiController extends Controller
         $kelas = Kelas::where('id', $validatedData['kelas'])->first();
         $ruangan = Ruangan::where('id', $validatedData['ruangan'])->first();
 
-        $this->sendWhatsapp($pengawas, $kelas, $ruangan, $validatedData['mulai_kompensasi']);
+        // $this->sendWhatsapp($pengawas, $kelas, $ruangan, $validatedData['mulai_kompensasi']);
 
         // Redirect or return a response
         return redirect()->back()->with('success', 'Kompensasi records created successfully.');
@@ -156,7 +156,7 @@ class KompensasiController extends Controller
         $twilioFrom = getenv('TWILIO_FROM');
     
         $client = new Client($twilioSid, $twilioToken);
-        $messageBody = "Pengawas dengan nama ". $pengawas->nama ." telah dijadwalkan untuk mengawas kelas " . $kelas->nama . " di ruangan " . $ruangan->nama . "pada tanggal " . $jadwal;
+        $messageBody = "Pengawas dengan nama ". $pengawas->nama ." telah dijadwalkan untuk mengawas kelas " . $kelas->nama_kelas . " di ruangan " . $ruangan->nama_ruangan . "pada tanggal " . $jadwal;
         $message = $client->messages
                   ->create("whatsapp:".$pengawas->no_hp, // to
                   array(
@@ -164,14 +164,6 @@ class KompensasiController extends Controller
                     "body" => $messageBody,
                   )
                   );
-
-    //               $message = $twilio->messages
-    //   ->create("whatsapp:+6283863115468", // to
-    //     array(
-    //       "from" => "whatsapp:+14155238886",
-    //       "body" => Your appointment is coming up on July 21 at 3PM
-    //     )
-    //   );
     }
 
     private function calculateJumlahKompensasi($absensis, $mahasiswaId)
@@ -223,7 +215,7 @@ class KompensasiController extends Controller
 
     public function master()
     {
-        $currentDate = Carbon::now()->toDateTimeString();
+        $currentDate = Carbon::now()->toDateString();
         $kompensasiList = Kompensasi::where(function ($query) use ($currentDate) {
             $query->where('jumlah_kompensasi', 0)
                 ->where('status', 0);
@@ -248,7 +240,7 @@ class KompensasiController extends Controller
 
     public function tolak(Request $request)
     {
-        $currentDate = Carbon::now()->toDateTimeString();
+        $currentDate = Carbon::now()->toDateString();
         Kompensasi::where('jadwal_kompensasi', '<', $currentDate)
         ->where('status', 0)
         ->update(['status' => 2]);

@@ -9,7 +9,7 @@ $containerNav = 'container-fluid';
 
 @section('content')
 <h4 class="fw-bold py-3 mb-4">
-  <span class="text-muted fw-light">Kompensasi /</span> Data Master
+  <span class="text-muted fw-light">Kompensasi /</span> Monitoring
   <span class="text-muted fw-light" style="float: right;"></span>
   <div style="clear: both;"></div>
 </h4>
