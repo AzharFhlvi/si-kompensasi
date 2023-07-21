@@ -1,15 +1,15 @@
 {
   "menu": [
     {
-      "menuHeader": "Menu"
+      "menuHeader": "Menu",
+      "role":[1, 2, 3, 4]
     },
     {
       "url": "/",
       "name": "Dashboard",
       "icon": "menu-icon tf-icons bx bx-home-circle",
       "slug": "dashboard-analytics",
-      "role": [1, 2, 3]
-      
+      "role": [1, 2, 3, 4]
     },
     {
       "url":"/kompensasi",
@@ -33,6 +33,23 @@
           "url": "/kompensasi/master",
           "name": "Monitoring",
           "slug": "kompensasi-master"
+        }
+      ]
+    },
+    {
+      "menuHeader": "Master",
+      "role": 4
+    },
+    {
+      "name": "Mahasiswa",
+      "icon": "menu-icon tf-icons bx bx-user",
+      "slug": "mahasiswa",
+      "role": 4,
+      "submenu": [
+        {
+          "url": "/mahasiswa",
+          "name": "Data Mahasiswa",
+          "slug": "mahasiswa-data-mahasiswa"
         }
       ]
     }

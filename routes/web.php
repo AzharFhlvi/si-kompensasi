@@ -86,7 +86,8 @@ Route::group(['prefix' => 'dashboard'], function () {
     Route::get('/', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
     Route::get('/admin', [App\Http\Controllers\DashboardController::class, 'dashAdm'])->name('dashboard-admin')->middleware('checkrole:1');;
     Route::get('/mahasiswa', [App\Http\Controllers\DashboardController::class, 'dashMhs'])->name('dashboard-mahasiswa')->middleware('checkrole:2');;
-    Route::get('/pengawas', [App\Http\Controllers\DashboardController::class, 'dashPws'])->name('dashboard-pengawas');
+    Route::get('/pengawas', [App\Http\Controllers\DashboardController::class, 'dashPws'])->name('dashboard-pengawas')->middleware('checkrole:3');
+    Route::get('/super', [App\Http\Controllers\DashboardController::class, 'dashSuper'])->name('dashboard-super')->middleware('checkrole:4');
 });
 
 Route::group(['prefix' => "kompensasi"], function () {

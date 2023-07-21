@@ -18,16 +18,7 @@
 
   <ul class="menu-inner py-1">
     @foreach ($menuBar[0]->menu as $menu)
-
-    {{-- adding active and open class if child is active --}}
-
-    {{-- menu headers --}}
-    @if (isset($menu->menuHeader))
-    <li class="menu-header small text-uppercase">
-      <span class="menu-header-text">{{ $menu->menuHeader }}</span>
-    </li>
-
-    @else
+    
     {{-- role check --}}
     @php
       $currentUser = auth()->user();
@@ -35,6 +26,19 @@
       $allowedRoles = isset($menu->role) ? (array)$menu->role : [];
       $hasRole = in_array($currentRole, $allowedRoles);
     @endphp
+
+    {{-- adding active and open class if child is active --}}
+
+    {{-- menu headers --}}
+    
+    @if (isset($menu->menuHeader))
+    @if ($hasRole)
+    <li class="menu-header small text-uppercase">
+      <span class="menu-header-text">{{ $menu->menuHeader }}</span>
+    </li>
+    @endif
+
+    @else
 
     {{-- active menu method --}}
     @php

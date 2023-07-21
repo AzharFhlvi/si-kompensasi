@@ -41,6 +41,9 @@ class DashboardController extends Controller
             case 3:
                 return $this->redirectToDashboard('pengawas');
                 break;
+            case 4:
+                return $this->redirectToDashboard('super');
+                break;
             default:
                 return redirect()->route('login'); // Redirect to login if the user role is not recognized
                 break;
@@ -144,6 +147,11 @@ class DashboardController extends Controller
             ->groupBy('kelas');
 
         return view('dashboard.pengawas', compact('kompensasis'));
+    }
+
+    public function dashSuper()
+    {
+        return view('dashboard.super');
     }
 
 }
