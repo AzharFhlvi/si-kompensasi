@@ -110,4 +110,9 @@ Route::group(['prefix' => 'kegiatan'], function () {
     Route::post('/store/{id}', [App\Http\Controllers\KegiatanController::class, 'store'])->name('kegiatan-store')->middleware('checkrole:3');
 });
 
+Route::group(['prefix' => 'mahasiswa', 'middleware' => 'checkrole:4'], function () {
+    Route::get('/', [App\Http\Controllers\MahasiswaController::class, 'index'])->name('mahasiswa');
+    Route::get('/search', [App\Http\Controllers\MahasiswaController::class, 'search'])->name('mahasiswa-search');
+});
+
 

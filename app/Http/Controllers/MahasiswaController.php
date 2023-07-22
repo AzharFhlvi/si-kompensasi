@@ -14,8 +14,20 @@ class MahasiswaController extends Controller
      */
     public function index()
     {
-        //
+        $mahasiswaList = Mahasiswa::all();
+        return view('master.mahasiswa.index', compact('mahasiswaList'));
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $mahasiswaList = Mahasiswa::where('nama', 'like', '%' . $query . '%')
+            ->orWhere('nim', 'like', '%' . $query . '%')
+            ->get();
+
+        return view('master.mahasiswa.index', compact('mahasiswaList'));
+    }
+
 
     /**
      * Show the form for creating a new resource.

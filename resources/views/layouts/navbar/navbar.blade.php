@@ -35,6 +35,10 @@ $user = Auth::user();
       @endif
 
       <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+        <!-- ... existing code ... -->
+        @yield('searchbar')
+        <!-- ... existing code ... -->
+
         <!-- Search -->
         <!-- <div class="navbar-nav align-items-center">
           <div class="nav-item d-flex align-items-center">

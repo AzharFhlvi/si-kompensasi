@@ -38,4 +38,9 @@ class UserUtils
 
         return Pengawas::where('id', $userIdentifier)->first();
     }
+
+    public static function getAllowedRoutes()
+    {
+        return ['mahasiswa', 'mahasiswa-search'];
+    }
 }
