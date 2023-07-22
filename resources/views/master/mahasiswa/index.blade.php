@@ -31,13 +31,15 @@ use App\View\Components\ChartComponent;
 </h4>
 
 <div class="card">
-  <h5 class="card-header">Daftar tanggung jawab</h5>
   <div class="table-responsive text-nowrap">
     <table class="table table-striped table-hover">
       <thead>
         <tr>
           <th>Nama</th>
           <th>NIM</th>
+          <th>Kelas</th>
+          <th>Prodi</th>
+          <th>Tahun Ajaran</th>
         </tr>
       </thead>
       <tbody class="table-border-bottom-0">
@@ -45,6 +47,9 @@ use App\View\Components\ChartComponent;
         <tr>
             <td>{{ $mahasiswa->nama }}</td>
             <td>{{ $mahasiswa->nim }}</td>
+            <td>{{ $mahasiswa->kelas->nama_kelas }}</td>
+            <td>{{ $mahasiswa->kelas->prodi->nama_prodi }}</td>
+            <td>{{ $mahasiswa->tahun_ajaran }}</td>
         </tr>
       @endforeach
       </tbody>

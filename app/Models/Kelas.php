@@ -10,4 +10,11 @@ class Kelas extends Model
     use HasFactory;
     protected $table = 'kelas';
     protected $primaryKey = 'id';
+
+    
+    
+    public function prodi()
+    {
+        return $this->belongsTo(Prodi::class, 'id_prodi');
+    }
 }
