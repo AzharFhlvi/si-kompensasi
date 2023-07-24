@@ -46,6 +46,7 @@ class KegiatanController extends Controller
 
         if($request->has('approve')){
             $kegiatan->status = 1;
+            $kegiatan->jam = $request->jam;
             $kegiatan->save();
             
             $kompensasi->jumlah_kompensasi = ($kompensasi->jumlah_kompensasi < $kegiatan->jam) ? 0 : ($kompensasi->jumlah_kompensasi - $kegiatan->jam);
