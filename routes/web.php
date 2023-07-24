@@ -113,6 +113,8 @@ Route::group(['prefix' => 'kegiatan'], function () {
 Route::group(['prefix' => 'mahasiswa', 'middleware' => 'checkrole:4'], function () {
     Route::get('/', [App\Http\Controllers\MahasiswaController::class, 'index'])->name('mahasiswa');
     Route::get('/search', [App\Http\Controllers\MahasiswaController::class, 'search'])->name('mahasiswa-search');
+    Route::get('/create', [App\Http\Controllers\MahasiswaController::class, 'create'])->name('mahasiswa-create');
+    Route::post('/store', [App\Http\Controllers\MahasiswaController::class, 'store'])->name('mahasiswa-store');
 });
 
 

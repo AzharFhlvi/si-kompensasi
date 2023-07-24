@@ -8,6 +8,9 @@ use App\View\Components\ChartComponent;
 
 @section('title', 'Fluid - Layouts')
 
+<!-- @push('scripts') -->
+<!-- @endpush -->
+
 @section('content')
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@latest"></script>
 
@@ -79,19 +82,19 @@ use App\View\Components\ChartComponent;
           <div id="chartTuntas"></div>
 
           <script>
-            const chartTuntas = @json($chartDataTuntas);
+            const dataTuntas = @json($chartDataTuntas);
 
             const tuntasOptions = {
                 chart: {
                     type: 'pie',
                 },
-                series: chartTuntas.map(item => item.value),
-                labels: chartTuntas.map(item => item.type),
+                series: dataTuntas.map(item => item.value),
+                labels: dataTuntas.map(item => item.type),
                 colors: ['#008FFB', '#00E396', '#FEB019', '#FF4560', '#775DD0', '#546E7A', '#26a69a', '#D10CE8'],
             };
 
-            const chart2 = new ApexCharts(document.querySelector("#chartTuntas"), tuntasOptions);
-            chart2.render();
+            const chartTuntas = new ApexCharts(document.querySelector("#chartTuntas"), tuntasOptions);
+            chartTuntas.render();
           </script>
         </div>
       </div>
@@ -115,14 +118,14 @@ use App\View\Components\ChartComponent;
           <div id="chartTidakTuntas"></div>
 
           <script>
-            const chartTidakTuntas = @json($chartDataTidakTuntas);
+            const chartDataTidakTuntas = @json($chartDataTidakTuntas);
 
             const tidakTuntasOptions = {
                 chart: {
                     type: 'pie',
                 },
-                series: chartTidakTuntas.map(item => item.value),
-                labels: chartTidakTuntas.map(item => item.type),
+                series: chartDataTidakTuntas.map(item => item.value),
+                labels: chartDataTidakTuntas.map(item => item.type),
                 colors: ['#008FFB', '#00E396', '#FEB019', '#FF4560', '#775DD0', '#546E7A', '#26a69a', '#D10CE8'],
             };
 

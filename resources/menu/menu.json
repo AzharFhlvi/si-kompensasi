@@ -50,6 +50,11 @@
           "url": "/mahasiswa",
           "name": "Data Mahasiswa",
           "slug": "mahasiswa-data-mahasiswa"
+        },
+        {
+          "url": "/mahasiswa/create",
+          "name": "Tambah Mahasiswa",
+          "slug": "mahasiswa-data-mahasiswa"
         }
       ]
     }

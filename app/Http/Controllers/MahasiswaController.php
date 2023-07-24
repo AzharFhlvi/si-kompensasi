@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
+use App\Models\Jurusan;
+use App\Models\Prodi;
+use App\Models\Kelas;
 
 class MahasiswaController extends Controller
 {
@@ -36,7 +39,10 @@ class MahasiswaController extends Controller
      */
     public function create()
     {
-        //
+        $jurusan = Jurusan::all();
+        $prodi = Prodi::all();
+        $kelas = Kelas::all();
+        return view('master.mahasiswa.create', compact('jurusan', 'prodi', 'kelas'));
     }
 
     /**
@@ -47,7 +53,34 @@ class MahasiswaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'nim' => 'required|string|max:255',
+            'nama' => 'required|string|max:255',
+            'alamat' => 'required|string',
+            'tanggal_lahir' => 'required|date',
+            'no_hp' => 'required|string|max:15',
+            'jenis_kelamin' => 'required|in:L,P',
+            'kelas' => 'required|exists:kelas,id',
+            'tahun_ajaran_start' => 'required|integer|min:1900|max:9999',
+            'tahun_ajaran_end' => 'required|integer|min:1900|max:9999',
+        ]);
+    
+        // Combine the start and end years to create the "Tahun Ajaran"
+        $tahun_ajaran = $request->tahun_ajaran_start . ' - ' . $request->tahun_ajaran_end;
+    
+        // Create a new Mahasiswa instance and fill it with the validated data
+        $mahasiswa = new Mahasiswa();
+        $mahasiswa->fill($validatedData);
+        $mahasiswa->email = $validatedData['nim'] . '@mahasiswa.poliban.ac.id';
+        $mahasiswa->id_kelas = $validatedData['kelas'];
+        $mahasiswa->tahun_ajaran = $tahun_ajaran;
+    
+        // Save the Mahasiswa instance to the database
+        $mahasiswa->save();
+    
+        // Redirect or do any further actions after successful storage
+        // For example:
+        return redirect()->route('mahasiswa')->with('success', 'Mahasiswa added successfully!');
     }
 
     /**
