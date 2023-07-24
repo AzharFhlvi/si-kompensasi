@@ -117,6 +117,7 @@ Route::group(['prefix' => 'mahasiswa', 'middleware' => 'checkrole:4'], function 
     Route::post('/store', [App\Http\Controllers\MahasiswaController::class, 'store'])->name('mahasiswa-store');
     Route::get('/show/{id}', [App\Http\Controllers\MahasiswaController::class, 'show'])->name('mahasiswa-show');
     Route::post('/update/{id}', [App\Http\Controllers\MahasiswaController::class, 'update'])->name('mahasiswa-update');
+    Route::get('/destroy/{id}', [App\Http\Controllers\MahasiswaController::class, 'destroy'])->name('mahasiswa-destroy');
 });
 
 

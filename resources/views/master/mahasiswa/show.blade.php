@@ -101,7 +101,8 @@ use App\View\Components\ChartComponent;
                         
                         
                         <div class="input-group">
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <button type="submit" class="btn btn-primary ml">Simpan</button>
+                            <a href="{{ route('mahasiswa-destroy', ['id' => $mahasiswa->id]) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this Mahasiswa?')">Hapus</a>
                         </div>
                     </div>
                 </div>
