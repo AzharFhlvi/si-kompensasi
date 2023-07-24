@@ -79,7 +79,8 @@ class KompensasiController extends Controller
         $kelas = Kelas::all();
         $ruangan = Ruangan::all();
         $pengawas = Pengawas::all();
-        return view('kompensasi.input', compact('jurusan', 'prodi', 'kelas', 'ruangan', 'pengawas'));
+        $tahunAjaran = Mahasiswa::distinct()->pluck('tahun_ajaran');
+        return view('kompensasi.input', compact('jurusan', 'prodi', 'kelas', 'ruangan', 'pengawas', 'tahunAjaran'));
     }
     public function getProdi($jurusanId)
     {
@@ -96,6 +97,7 @@ class KompensasiController extends Controller
     public function inputStore(Request $request)
     {
         $validatedData = $request->validate([
+            'tahun_ajaran' => 'required',
             'jurusan' => 'required|numeric',
             'prodi' => 'required|numeric',
             'kelas' => 'required|numeric',
@@ -105,7 +107,9 @@ class KompensasiController extends Controller
         ]);
 
         // Retrieve the mahasiswas with the specified kelas_id
-        $mahasiswas = Mahasiswa::where('id_kelas', $validatedData['kelas'])->get();
+        $mahasiswas = Mahasiswa::where('id_kelas', $validatedData['kelas'])
+            ->where('tahun_ajaran', $validatedData['tahun_ajaran'])
+        ->get();
 
         // Retrieve the absensi records for the mahasiswas
         $absensis = Absensi::whereIn('id_mahasiswa', $mahasiswas->pluck('id'))->get();

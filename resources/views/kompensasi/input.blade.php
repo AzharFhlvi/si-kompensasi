@@ -25,6 +25,18 @@ $containerNav = 'container-fluid';
           </a>
         </h5>
         <div class="card-body demo-vertical-spacing demo-only-element">
+          
+
+        <div class="input-group">
+        <label class="input-group-text" for="jurusan">Tahun Ajaran</label>
+        <select class="form-select" id="tahun_ajaran" name="tahun_ajaran">
+                <option selected disabled>Choose...</option>
+                @foreach($tahunAjaran as $ta)
+                  <option value="{{ $ta }}">{{ $ta }}</option>
+              @endforeach
+            </select>
+        </div>
+
         <div class="input-group">
           <label class="input-group-text" for="jurusan">Jurusan</label>
           <select class="form-select" id="jurusan" name="jurusan">
