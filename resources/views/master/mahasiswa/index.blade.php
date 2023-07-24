@@ -45,7 +45,11 @@ use App\View\Components\ChartComponent;
       <tbody class="table-border-bottom-0">
       @foreach($mahasiswaList as $mahasiswa)
         <tr>
-            <td>{{ $mahasiswa->nama }}</td>
+            <td>
+              <a href="{{ route('mahasiswa-show', ['id' => $mahasiswa->id]) }}">
+                  {{ $mahasiswa->nama }}
+              </a>
+            </td>
             <td>{{ $mahasiswa->nim }}</td>
             <td>{{ $mahasiswa->kelas->nama_kelas }}</td>
             <td>{{ $mahasiswa->kelas->prodi->nama_prodi }}</td>
