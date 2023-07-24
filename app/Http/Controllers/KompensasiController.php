@@ -13,6 +13,7 @@ use App\Models\Kegiatan;
 use App\Models\Jurusan;
 use App\Models\Prodi;
 use App\Models\Kelas;
+use PDF;
 use App\Models\Ruangan;
 use App\Utils\UserUtils;
 use Carbon\Carbon;
@@ -265,6 +266,15 @@ class KompensasiController extends Controller
         $namaKelas = Kelas::where('id', $id_kelas)->value('nama_kelas');
 
         return view('kompensasi.detil-mhs', compact('kompensasiList', 'namaKelas'));
+    }
+
+    public function downloadSurat($id)
+    {
+        $kompensasi = Kompensasi::find($id);
+        $mahasiswa = $kompensasi->mahasiswa; // Retrieve the associated Mahasiswa model
+        $kegiatanList = $mahasiswa->kegiatan;
+        $pdf = \PDF::loadView('kompensasi.surat', compact('mahasiswa', 'kompensasi', 'kegiatanList'));
+        return $pdf->download('surat-kompensasi.pdf');
     }
 
 

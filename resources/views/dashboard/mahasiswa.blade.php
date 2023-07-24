@@ -57,6 +57,18 @@ use App\View\Components\ChartComponent;
           </div>
         </div>
       </div>
+      @if($kompensasi->status == 1)
+      <div class="col-lg-12 col-md-12 col-12 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <span class="fw-semibold d-block mb-1">Download Surat</span>
+            <h3 class="card-title mb-2">
+              <a href="{{ route('kompensasi-download-surat', $kompensasi->id) }}" class="btn btn-primary btn-sm">Download</a>
+            </h3>
+          </div>
+        </div>
+      </div>
+      @endif
       <div class="col-lg-12 col-md-12 col-12 mb-4">
         <div class="card">
           <div class="card-body">
