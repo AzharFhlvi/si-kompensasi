@@ -26,48 +26,48 @@ $containerNav = 'container-fluid';
         </h5>
         <div class="card-body demo-vertical-spacing demo-only-element">
         <div class="input-group">
-    <label class="input-group-text" for="jurusan">Jurusan</label>
-    <select class="form-select" id="jurusan" name="jurusan">
-        <option selected disabled>Choose...</option>
-        @foreach($jurusan as $j)
-            <option value="{{ $j->id }}">{{ $j->nama_jurusan }}</option>
-        @endforeach
-    </select>
-</div>
+          <label class="input-group-text" for="jurusan">Jurusan</label>
+          <select class="form-select" id="jurusan" name="jurusan">
+              <option selected disabled>Choose...</option>
+              @foreach($jurusan as $j)
+                  <option value="{{ $j->id }}">{{ $j->nama_jurusan }}</option>
+              @endforeach
+          </select>
+        </div>
 
-<div class="input-group">
-    <label class="input-group-text" for="prodi">Prodi</label>
-    <select class="form-select" id="prodi" name="prodi" disabled>
-        <option selected disabled>Choose...</option>
-    </select>
-</div>
+        <div class="input-group">
+            <label class="input-group-text" for="prodi">Prodi</label>
+            <select class="form-select" id="prodi" name="prodi" disabled>
+                <option selected disabled>Choose...</option>
+            </select>
+        </div>
 
-<div class="input-group">
-    <label class="input-group-text" for="kelas">Kelas</label>
-    <select class="form-select" id="kelas" name="kelas" disabled>
-        <option selected disabled>Choose...</option>
-    </select>
-</div>
+        <div class="input-group">
+            <label class="input-group-text" for="kelas">Kelas</label>
+            <select class="form-select" id="kelas" name="kelas" disabled>
+                <option selected disabled>Choose...</option>
+            </select>
+        </div>
 
-<div class="input-group">
-    <label class="input-group-text" for="pengawas">Pengawas</label>
-    <select class="form-select" id="pengawas" name="pengawas">
-        <option selected disabled>Choose...</option>
-        @foreach($pengawas as $ps)
-            <option value="{{ $ps->id }}">{{ $ps->nama }}</option>
-        @endforeach
-    </select>
-</div>
+        <div class="input-group">
+            <label class="input-group-text" for="pengawas">Pengawas</label>
+            <select class="form-select" id="pengawas" name="pengawas">
+                <option selected disabled>Choose...</option>
+                @foreach($pengawas as $ps)
+                    <option value="{{ $ps->id }}">{{ $ps->nama }}</option>
+                @endforeach
+            </select>
+        </div>
 
-<div class="input-group">
-    <label class="input-group-text" for="ruangan">Ruangan</label>
-    <select class="form-select" id="ruangan" name="ruangan">
-        <option selected disabled>Choose...</option>
-        @foreach($ruangan as $r)
-            <option value="{{ $r->id }}">{{ $r->nama_ruangan }}</option>
-        @endforeach
-    </select>
-</div>
+        <div class="input-group">
+            <label class="input-group-text" for="ruangan">Ruangan</label>
+            <select class="form-select" id="ruangan" name="ruangan">
+                <option selected disabled>Choose...</option>
+                @foreach($ruangan as $r)
+                    <option value="{{ $r->id }}">{{ $r->nama_ruangan }}</option>
+                @endforeach
+            </select>
+      </div>
 
 
           <div class="input-group">

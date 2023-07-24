@@ -8,6 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Mahasiswa extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'nim', // Add 'nim' to the fillable array
+        'nama',
+        'alamat',
+        'tanggal_lahir',
+        'no_hp',
+        'jenis_kelamin',
+        'jurusan',
+        'prodi',
+        'id_kelas',
+        'tahun_ajaran',
+    ];
 
     public function kompensasi()
     {
