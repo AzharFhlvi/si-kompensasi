@@ -95,6 +95,21 @@ class KompensasiController extends Controller
         return response()->json($kelas);
     }
 
+    private function calculateJadwalKompensasi($mulaiKompensasi, $jamTotal, $jamMaksimalPerHari)
+{
+    if ($jamTotal <= 0) {
+        return $mulaiKompensasi; // No kompensasi needed, return the starting date as jadwal_kompensasi
+    }
+
+    // Calculate the number of days required to complete the kompensasi
+    $jumlahHari = ceil($jamTotal / $jamMaksimalPerHari);
+
+    // Add the calculated number of days to the starting date
+    $jadwalKompensasi = Carbon::parse($mulaiKompensasi)->addDays($jumlahHari)->toDateString();
+
+    return $jadwalKompensasi;
+}
+
     public function inputStore(Request $request)
     {
         $validatedData = $request->validate([
@@ -119,24 +134,27 @@ class KompensasiController extends Controller
         $kompensasis = [];
         foreach ($mahasiswas as $mahasiswa) {
             $kompensasi = new Kompensasi();
-            $kompensasi->id_mahasiswa = $mahasiswa->id;
-            $kompensasi->id_ruangan = $validatedData['ruangan'];
-            $kompensasi->id_pengawas = $validatedData['pengawas'];
-            $kompensasi->mulai_kompensasi = $validatedData['mulai_kompensasi'];
-            $kompensasi->jadwal_kompensasi = $validatedData['mulai_kompensasi'];
-            
-            // Calculate jumlah_kompensasi based on the absensi records for the mahasiswa
-            $jumlahKompensasi = $this->calculateJumlahKompensasi($absensis, $mahasiswa->id);
-            $alfa = $this->calculateAbsensiValue($absensis, $mahasiswa->id, 'alfa');
-            $izin = $this->calculateAbsensiValue($absensis, $mahasiswa->id, 'izin');
-            $sakit = $this->calculateAbsensiValue($absensis, $mahasiswa->id, 'sakit');
+$kompensasi->id_mahasiswa = $mahasiswa->id;
+$kompensasi->id_ruangan = $validatedData['ruangan'];
+$kompensasi->id_pengawas = $validatedData['pengawas'];
+$kompensasi->mulai_kompensasi = $validatedData['mulai_kompensasi'];
 
-            $kompensasi->jumlah_kompensasi = $jumlahKompensasi;
-            $kompensasi->alfa = $alfa;
-            $kompensasi->izin = $izin;
-            $kompensasi->sakit = $sakit;
+// Calculate jumlah_kompensasi based on the absensi records for the mahasiswa
+$jumlahKompensasi = $this->calculateJumlahKompensasi($absensis, $mahasiswa->id);
+$alfa = $this->calculateAbsensiValue($absensis, $mahasiswa->id, 'alfa');
+$izin = $this->calculateAbsensiValue($absensis, $mahasiswa->id, 'izin');
+$sakit = $this->calculateAbsensiValue($absensis, $mahasiswa->id, 'sakit');
 
-            $kompensasis[] = $kompensasi;
+$kompensasi->jumlah_kompensasi = $jumlahKompensasi;
+$kompensasi->alfa = $alfa;
+$kompensasi->izin = $izin;
+$kompensasi->sakit = $sakit;
+
+// Calculate the jadwal_kompensasi using the dynamic method
+$jamMaksimalPerHari = 6; // Set the maximum hours per day
+$kompensasi->jadwal_kompensasi = $this->calculateJadwalKompensasi($validatedData['mulai_kompensasi'], $jumlahKompensasi, $jamMaksimalPerHari);
+
+$kompensasis[] = $kompensasi;
         }
         
         // Save the new Kompensasi instances to the database
